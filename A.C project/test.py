@@ -1,25 +1,47 @@
 import tkinter as tk 
 from tkinter import messagebox
+#import win32api 
+#import win32con
+#import time
+
+#win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
+
 
 class test_gui:
     def __init__(self):
         self.root = tk.Tk()
-
+        
+        self.grey = "#808080"
+        self.black = "#000000"
+        self.root.configure(bg= self.black)
         self.root.geometry("800x500")
         self.root.title("A.C")
 
-        self.label = tk.Label(self.root, text= "Test Your Button!", font = ("Arial", 18))
+        self.menubar = tk.Menu(self.root)
+
+        self.filemenu = tk.Menu(self.menubar, tearoff = 0)
+        self.filemenu.add_command(label= "Close", command= self.leaving_msg)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label = "Close Without Question", command = exit)
+        self.menubar.add_cascade(menu= self.filemenu, label = "File")
+
+        self.root.config(menu = self.menubar)
+
+        self.label = tk.Label(self.root, text= "Test Your Button!",bg = self.grey, font = ("Arial", 18))
         self.label.pack(padx = 10, pady = 10)
 
-        self.textbox = tk.Text(self.root, height = 5, font = ("Arial", 16))
+        self.textbox = tk.Text(self.root, height = 5,bg = self.grey, font = ("Arial", 16))
         self.textbox.pack(padx = 10, pady = 10)
         self.textbox.bind("<KeyPress>", self.shortcut)
         self.check_state = tk.IntVar()
 
-        self.checkbutton = tk.Checkbutton(self.root, text = "Check Here!", font= ("Arial", 16), variable= self.check_state)
+        self.checkbutton = tk.Checkbutton(self.root, text = "Check Here!", font= ("Arial", 16), bg = self.grey, variable= self.check_state)
         self.checkbutton.pack(padx= 10, pady= 10)
 
-        self.button = tk.Button(self.root, text = "Click!", font = ("Arial", 18), command= self.show_message)
+        self.clearbtn = tk.Button(self.root, text = "Clear", font= ("Arial", 18), bg = self.grey, command = self.clear)
+        self.clearbtn.pack(padx = 10, pady = 10)
+
+        self.button = tk.Button(self.root, text = "Click!", font = ("Arial", 18), bg = self.grey, command= self.show_message)
         self.button.pack(padx = 10, pady = 10)
         
         self.root.protocol("WM_DELETE_WINDOW", self.leaving_msg)
@@ -40,7 +62,9 @@ class test_gui:
         if messagebox.askyesno(title = "Warning!", message = "Do you really want to quit?"):
             self.root.destroy()
         #messagebox.showinfo(title = "Warning!", message = "Are you sure you want to leave?")
-        
+    
+    def clear(self):
+        self.textbox.delete("1.0", tk.END)
 test_gui()
 
 #root = tk.Tk()
