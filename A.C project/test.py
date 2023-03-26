@@ -1,4 +1,5 @@
 import tkinter as tk 
+from tkinter import messagebox
 
 class test_gui:
     def __init__(self):
@@ -12,7 +13,7 @@ class test_gui:
 
         self.textbox = tk.Text(self.root, height = 5, font = ("Arial", 16))
         self.textbox.pack(padx = 10, pady = 10)
-
+        self.textbox.bind("<KeyPress>", self.shortcut)
         self.check_state = tk.IntVar()
 
         self.checkbutton = tk.Checkbutton(self.root, text = "Check Here!", font= ("Arial", 16), variable= self.check_state)
@@ -20,15 +21,26 @@ class test_gui:
 
         self.button = tk.Button(self.root, text = "Click!", font = ("Arial", 18), command= self.show_message)
         self.button.pack(padx = 10, pady = 10)
+        
+        self.root.protocol("WM_DELETE_WINDOW", self.leaving_msg)
+
         self.root.mainloop()
     
     def show_message(self):
-        if self.check_state == 1:
-            print("Thank You!")
+        if self.check_state.get() == 0:
+            print(self.textbox.get("1.0", tk.END))
         else:
-            print("welp")
+            messagebox.showinfo(title = "Message", message = self.textbox.get("1.0", tk.END))
 
+    def shortcut(self, event):
+        if event.keysym == "Return" and event.state == 4:
+            self.show_message()
 
+    def leaving_msg(self):
+        if messagebox.askyesno(title = "Warning!", message = "Do you really want to quit?"):
+            self.root.destroy()
+        #messagebox.showinfo(title = "Warning!", message = "Are you sure you want to leave?")
+        
 test_gui()
 
 #root = tk.Tk()
