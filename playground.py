@@ -110,6 +110,7 @@ class AC:
 
     def select_bind(self):
         self.keybind = str(self.textbox.get("1.0"))
+        
         #print(self.keybind)
         #print(event.char)
         #print(type(1))
