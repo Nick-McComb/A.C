@@ -36,9 +36,11 @@ class AC:
         #self.root.configure(background=  self.bg)
         #self.color_scale = Image.open("C:\\Users\\NickM\\Desktop\\A.C\\color.png")
         #self.rs_color_scale = self.image.resize((250, 20),Image.ANTIALIAS)
+        self.choose = tk.Label(self.root, text = "Choose Cps", font = ("Arial, 16"), width = 9, height = 1, bg = "#F6F6F6")
+        self.choose_window = self.canvas.create_window(200, 40, anchor = 'n', window = self.choose)
 
         self.slider = tk.Scale(self.root, from_ = 0, to = 20, resolution = 1, orient= "horizontal",tickinterval=20, width = 20, length = 250, borderwidth= 2, troughcolor='#1065BF',bg ="white", relief="solid",command = self.choose_cps)
-        self.slider_window = self.canvas.create_window(200, 70, anchor = "n", window = self.slider)
+        self.slider_window = self.canvas.create_window(200, 74, anchor = "n", window = self.slider)
 
         self.select_btn = tk.Button(self.root, text= "Select",font =("Arial",18),relief="solid",borderwidth=2,bg="white", command = self.step) #command = lambda:[self.start_click, self.stop_btn])
         self.select_btn_window = self.canvas.create_window(200,200, anchor= "n", window = self.select_btn)
